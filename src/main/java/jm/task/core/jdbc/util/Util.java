@@ -3,10 +3,13 @@ package jm.task.core.jdbc.util;
 import java.sql.*;
 
 public class Util {
+
     private static final String dbUrl = "jdbc:mysql://localhost:3306/pp_1_1_4";
     private static final String dbUserName = "root";
-    private static final String dbPass = "123456789";
+    private static final String dbPass = "my179sql";
+
     private Connection connection;
+
     public Connection getConnection() {
         connection = null;
         try {

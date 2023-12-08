@@ -8,18 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
+
     Connection connection = new Util().getConnection();
 
-    public UserDaoJDBCImpl() {
+    //todo: выносим константы из методов, правильно именуем:
+    private static final String createUsersQuery = "CREATE TABLE users(id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR (50), lastName VARCHAR (50), age INT(3))";
 
+    public UserDaoJDBCImpl() {
+        //todo: инициализация Connection connection - через конструктор
     }
 
     public void createUsersTable() {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("CREATE TABLE users(id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR (50), lastName VARCHAR (50), age INT(3))");
+            statement.execute(createUsersQuery);
         } catch (SQLException e) {
+            //todo: (во всех методах) если после данной ошибки - работа приложения не целесообразно - роняем его, например так:
+            throw new IllegalStateException("Invalid createUsersQuery: " + e.getMessage());
         }
-
+        //todo: codeStyle - пустые строки..
     }
 
     public void dropUsersTable() {

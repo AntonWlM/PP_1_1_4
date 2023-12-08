@@ -16,8 +16,8 @@ public class UserServiceImpl extends UserDaoJDBCImpl implements UserService {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        super.saveUser(name,lastName, age);
-    }
+        saveUser(name,lastName, age);//todo: super ..зачем?? Необходимо вспомнить - как имплементится интерфейс ! ..ставится @Overide !
+    }//todo: избавляемся от примитивов ..пора.
 
     public void removeUserById(long id) {
         super.removeUserById(id);
