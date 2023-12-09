@@ -5,29 +5,36 @@ import jm.task.core.jdbc.model.User;
 
 import java.util.List;
 
-public class UserServiceImpl extends UserDaoJDBCImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
+
+    UserDaoJDBCImpl userService = new UserDaoJDBCImpl();
+
+    @Override
     public void createUsersTable() {
-        super.createUsersTable();
+        userService.createUsersTable();
     }
 
+    @Override
     public void dropUsersTable() {
-        super.dropUsersTable();
+        userService.dropUsersTable();
     }
 
+    @Override
     public void saveUser(String name, String lastName, byte age) {
-        saveUser(name,lastName, age);//todo: super ..зачем?? Необходимо вспомнить - как имплементится интерфейс ! ..ставится @Overide !
-    }//todo: избавляемся от примитивов ..пора.
+        userService.saveUser(name, lastName, age);
+    }
 
+    @Override
     public void removeUserById(long id) {
-        super.removeUserById(id);
+        userService.removeUserById(id);
     }
 
+    @Override
     public List<User> getAllUsers() {
-        return super.getAllUsers();
+        return userService.getAllUsers();
     }
 
-    public void cleanUsersTable() {
-        super.cleanUsersTable();
-    }
+    @Override
+    public void cleanUsersTable() { userService.cleanUsersTable(); }
 }

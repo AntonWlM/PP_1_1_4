@@ -1,10 +1,13 @@
 package jm.task.core.jdbc.util;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Util {
 
-    private static final String dbUrl = "jdbc:mysql://localhost:3306/pp_1_1_4";
+    private static final String dbUrl = "jdbc:mysql://localhost:3306/usersbase";
     private static final String dbUserName = "root";
     private static final String dbPass = "my179sql";
 
