@@ -13,9 +13,11 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl() {
         userService =  new UserDaoJDBCImpl();
     }
+
     @Override
     public void createUsersTable() {
         userService.createUsersTable();
+        //todo: System.out.println("Создана таблица..."); - иммитация логирования в слое, в каждом методе
     }
 
     @Override

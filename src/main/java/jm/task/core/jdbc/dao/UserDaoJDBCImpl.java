@@ -11,8 +11,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     Connection connection;
 
-    //todo: ...IF NOT EXISTS
-    private static final String createUsersQuery = "CREATE TABLE users (id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR (50), lastName VARCHAR (50), age INT(3))";
+    //todo: ...IF NOT EXISTS - написал сам в запросе.
+    private static final String createUsersQuery = "CREATE TABLE IF NOT EXISTS users (id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR (50), lastName VARCHAR (50), age INT(3))";
 
 
     public UserDaoJDBCImpl() {
@@ -62,8 +62,10 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
-        try (ResultSet resultSet = connection.createStatement().executeQuery("select * FROM users")) {
-            while (resultSet.next()) {
+//        try (ResultSet resultSet = connection.createStatement().executeQuery("select * FROM users")) {//todo: .executeQuery("select * FROM users") - запрос в качестве ресурса ..это перебор точно
+          try (Statement statement = connection.createStatement()) {
+              ResultSet resultSet = statement.executeQuery("select * FROM users");//todo: выносим SQL-переменную из тела метода
+              while (resultSet.next()) {
                 User user = new User();
                 user.setId(resultSet.getLong(1));
                 user.setName(resultSet.getString(2));
