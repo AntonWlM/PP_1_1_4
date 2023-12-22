@@ -14,8 +14,8 @@ public class Main {
         userService.saveUser("Vasya", "Pupkin", (byte) 18);
         userService.saveUser("Pupa", "Budkin", (byte) 120);
         userService.saveUser("Olya", "Lukoil", (byte) 59);
+        userService.removeUserById(1);
         List <User> userList = userService.getAllUsers();
-//        userService.removeUserById(2);//todo: метод просто не рабочий - в консоль с ним/без него выводится одно и то же
         System.out.println(userList);
         userService.cleanUsersTable();
         userService.dropUsersTable();

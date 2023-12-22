@@ -7,9 +7,9 @@ import java.sql.SQLException;
 
 public class Util {
 
-    private static final String dbUrl = "jdbc:mysql://localhost:3306/usersbase";
+    private static final String dbUrl = "jdbc:mysql://localhost:3306/userbase";
     private static final String dbUserName = "root";
-    private static final String dbPass = "my179sql";
+    private static final String dbPass = "root";//"my179sql";
 
     private Connection connection;
 

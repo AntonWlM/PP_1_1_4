@@ -12,7 +12,7 @@ public class UserDaoJDBCImpl implements UserDao {
     Connection connection;
 
     //todo: ...IF NOT EXISTS
-    private static final String createUsersQuery = "CREATE TABLE users(id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR (50), lastName VARCHAR (50), age INT(3))";
+    private static final String createUsersQuery = "CREATE TABLE users (id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR (50), lastName VARCHAR (50), age INT(3))";
 
 
     public UserDaoJDBCImpl() {
@@ -24,7 +24,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = connection.createStatement()) {
             statement.execute(createUsersQuery);
         } catch (SQLException e) {
-            throw new IllegalStateException("Invalid createUsersQuery: " + e.getMessage());
+            System.out.println("Ошибка создания TABLE users (таблица уже имеется)");;
         }
     }
 
@@ -33,7 +33,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = connection.createStatement()) {
             statement.execute("DROP TABLE users");
         } catch (SQLException e) {
-            throw new IllegalStateException("Invalid dropUsersTable: " + e.getMessage());
+            System.out.println("TABLE users отсутствует");
         }
     }
 
@@ -51,7 +51,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
+        try (PreparedStatement statement = connection.prepareStatement("DELETE from users WHERE id=?")) {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
