@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
+
     Connection connection;
 
+    //todo: ...IF NOT EXISTS
     private static final String createUsersQuery = "CREATE TABLE users(id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR (50), lastName VARCHAR (50), age INT(3))";
 
 
@@ -43,7 +45,7 @@ public class UserDaoJDBCImpl implements UserDao {
             statement.setInt(3, age);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new IllegalStateException("Invalid saveUser: " + e.getMessage());
+            throw new IllegalStateException("Invalid saveUser: " + e.getMessage());//todo: так нужно сделать везде
         }
     }
 

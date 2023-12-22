@@ -8,7 +8,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
 
-    UserDaoJDBCImpl userService = new UserDaoJDBCImpl();
+    UserDaoJDBCImpl userService = new UserDaoJDBCImpl();//todo: вносим/инициализируем все переменные в класс - через конструктор
 
     @Override
     public void createUsersTable() {
@@ -23,10 +23,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(String name, String lastName, byte age) {
         userService.saveUser(name, lastName, age);
-    }
+    }//todo: на следующих задачах - избавляемся от примитивов
 
     @Override
     public void removeUserById(long id) {
+        //todo: на ВСЕХ методах service - должно быть логирование (иммитация логирования - через sout)
         userService.removeUserById(id);
     }
 
