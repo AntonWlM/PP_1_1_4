@@ -12,7 +12,12 @@ public class UserDaoJDBCImpl implements UserDao {
     Connection connection;
 
     //todo: ...IF NOT EXISTS - написал сам в запросе.
-    private static final String createUsersQuery = "CREATE TABLE IF NOT EXISTS users (id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR (50), lastName VARCHAR (50), age INT(3))";
+    private static final String createUsersQuery = "CREATE TABLE IF NOT EXISTS users(id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR (50), lastName VARCHAR (50), age INT(3))";
+    private static final String dropUsersTable = "DROP TABLE users";
+    private static final String insertIntoUsers = "INSERT INTO users (name, lastName, age) values (?, ?, ?)";
+    private static final String deleteFromUsersId = "DELETE FROM users WHERE id = ?";
+    private static final String selectFromUsers = "select * FROM users";
+    private static final String deleteFromUsers = "DELETE FROM users";
 
 
     public UserDaoJDBCImpl() {
@@ -31,7 +36,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void dropUsersTable() {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("DROP TABLE users");
+            statement.execute(dropUsersTable);
         } catch (SQLException e) {
             System.out.println("TABLE users отсутствует");
         }
@@ -39,19 +44,19 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO users (name, lastName, age) values (?, ?, ?)")) {
+        try (PreparedStatement statement = connection.prepareStatement(insertIntoUsers)) {
             statement.setString(1, name);
             statement.setString(2, lastName);
             statement.setInt(3, age);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new IllegalStateException("Invalid saveUser: " + e.getMessage());//todo: так нужно сделать везде
+            throw new IllegalStateException("Invalid saveUser: " + e.getMessage());
         }
     }
 
     @Override
     public void removeUserById(long id) {
-        try (PreparedStatement statement = connection.prepareStatement("DELETE from users WHERE id=?")) {
+        try (PreparedStatement statement = connection.prepareStatement(deleteFromUsersId)) {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -62,9 +67,8 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
-//        try (ResultSet resultSet = connection.createStatement().executeQuery("select * FROM users")) {//todo: .executeQuery("select * FROM users") - запрос в качестве ресурса ..это перебор точно
           try (Statement statement = connection.createStatement()) {
-              ResultSet resultSet = statement.executeQuery("select * FROM users");//todo: выносим SQL-переменную из тела метода
+              ResultSet resultSet = statement.executeQuery(selectFromUsers);
               while (resultSet.next()) {
                 User user = new User();
                 user.setId(resultSet.getLong(1));
@@ -82,7 +86,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void cleanUsersTable() {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("DELETE FROM users");
+            statement.execute(deleteFromUsers);
         } catch (SQLException e) {
             throw new IllegalStateException("Invalid cleanUsersTable: " + e.getMessage());
         }
